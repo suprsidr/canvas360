@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+<link href="pageStyles.css" rel="stylesheet" />
+<link href="css/main.css" rel="stylesheet" />
+<link href="css/prism.css" rel="stylesheet" />
+<link href="css/prism-line-numbers.css" rel="stylesheet" />
+</head>
+
+<body>
+
+  <div id="header">
+    <nav>
+      <ul>
+      <li><a href="/default.html">&lt; Sandbox Home</a></li>
+      <li><a href="#basic">Basic Example</a></li>
+      <li><a href="#lightboxing">Lightboxing w/ jQuery</a></li>
+      <li><a href="#params">Parameters</a></li>
+      <li><a href="js/canvas360.zip">Download</a></li>
+      </ul>
+    </nav>
+  </div>
+  
+  <div class="mainContent"><div class="inner">
+  <h1>HTML5 Canvas 360</h1>
+  <h2>What is it?</h2>
+  <p>Creates a dynamically generated 360 view using an array of images in a HTML5 canvas element.</p>
+  
+  <h2>Features</h2>
+  <ul>
+    <li>Responds to mouse movement, left and right arrow keys and touch events to rotate through the image array.</li>
+    <li>Can use remote or local images.</li>
+    <li>Can be any height/width.</li>
+    <li>Can use any length image array.</li>
+    <li>Able to have multiple in one document.</li>
+    <li>Many parameters for easy customization.</li>
+  </ul>
+  <a name="basic"></a>
+  <h2>Basic Usage Instructions</h2>
+  
+  <div class="usage">
+    <h3>HTML</h3>
+    <p>Create a target container.</p>
+    <pre class="line-numbers"><code class="language-markup">&lt;div class="pop360">&lt;/div></code></pre>
+    
+    <h3>Javascript</h3>
+    <p>This plugin does not require jQuery</p>
+    <pre class="line-numbers"><code class="language-javascript">    canvas360({
+      canvasId : '.pop360',
+      canvasWidth : 750,
+      canvasHeight : 269,
+      framesFile : 'EFL10550-{col}.jpg'
+    });</code></pre>
+    
+    <h3>CSS</h3>
+    <p>No special styles required.</p>
+    <h3>The above code would produce</h3>
+    <div class="pop360-inline"></div>
+    <script>
+      window.onload = function(){
+        canvas360({
+          canvasId : '.pop360-inline',
+          canvasWidth : 750,
+          canvasHeight : 269,
+          framesFile : 'EFL10550-{col}.jpg',
+          framesReverse: true
+        });
+      }
+    </script>
+    <p>&nbsp;</p>
+    <a name="lightboxing"></a>
+    <h2>Using a link to launch in a lightbox via jQuery</h2>
+    
+    <h3>HTML</h3>
+    <p>Using data-attributes as canvas360 parameters.</p>
+    <pre class="line-numbers"><code class="language-markup">    &lt;a title="Launch EFLH1250 360 View" href="#pop360" data-canvasWidth="750" data-canvasHeight="501" data-framesPath="http://s7d5.scene7.com/is/image/horizonhobby/" data-framesFile="360_EFLH1250_{col}?wid=750">&lt;img src="img/360_icon.jpg" alt="360 icon" />&lt;/a>
+    &lt;a title="Launch BLH7400 360 View" href="#pop360" data-canvasWidth="750" data-canvasHeight="316" data-framesPath="http://s7d5.scene7.com/is/image/horizonhobby/" data-framesFile="360_BLH7400_{col}?wid=750" data-framesReverse="true">&lt;img src="img/360_icon.jpg" alt="360 icon" />&lt;/a>
+    &lt;a title="Launch BLH7600 360 View" href="#pop360" data-canvasWidth="750" data-canvasHeight="280" data-framesPath="http://s7d5.scene7.com/is/image/horizonhobby/" data-framesFile="360_BLH7600_{col}?wid=750">&lt;img src="img/360_icon.jpg" alt="360 icon" />&lt;/a>
+    &lt;a title="Launch BLH7800 360 View" href="#pop360" data-canvasWidth="750" data-canvasHeight="290" data-framesPath="http://s7d5.scene7.com/is/image/horizonhobby/" data-framesFile="360_BLH7800_{col}?wid=750" data-framesReverse="true">&lt;img src="img/360_icon.jpg" alt="360 icon" />&lt;/a>
+    &lt;a title="Launch EFL10550 360 View" href="#pop360" data-canvasWidth="750" data-canvasHeight="269" data-framesFile="EFL10550-{col}.jpg" data-framesReverse="true">&lt;img src="img/360_icon.jpg" alt="360 icon" />&lt;/a>
+    </code></pre>
+    
+    <h3>Javascript</h3>
+    <pre class="line-numbers"><code class="language-javascript">    $('a[href="#pop360"]').on('click', function(e) {
+      e.preventDefault();
+      // Add our modal and target divs
+      $('body').append($('&lt;div />').addClass('popbk')).append($('&lt;div />').addClass('pop360'));
+      // Notice data attributes lose camelCase
+      canvas360({
+        canvasId : '.pop360',
+        canvasWidth : parseInt($(this).data('canvaswidth')),
+        canvasHeight: parseInt($(this).data('canvasheight')),
+        framesPath : $(this).data('framespath') || '',
+        framesFile : $(this).data('framesfile'),
+        framesReverse: !!$(this).data('framesreverse') || false
+      });
+      // add our closer
+      $('.pop360').append('&lt;a class="x-closer">&amp;#215;&lt;/a>');
+    });
+    $(document).on('click', '.x-closer, .popbk', function(e) {
+      $('.popbk, .pop360').fadeOut('fast', function() {
+        $('.popbk, .pop360').remove();
+      });
+    });</code></pre>
+    
+    <h3>CSS</h3>
+    <p>Modal styles and canvas container positioning.</p>
+    <pre class="line-numbers"><code class="language-css">    .popbk{background-color:rgba(0,0,0,.6);position:fixed;top:0;left:0;width:100%;height:100%;z-index:998;-webkit-transform:translateZ(0)}
+    .pop360 {z-index:999;position:fixed;top:0;right:0;bottom:0;left:0;margin:auto;-webkit-transform:translateZ(0);box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.6)}
+    .pop360:after {content: "Click/Swipe and drag or use arrow keys to rotate";width: 100%;position: absolute;left: 0;top: 0;text-align: center;color: #999;font-size: .8em;border: 0 none}
+    .pop360 .x-closer{z-index: 999;position:absolute;top:-22px;right:-22px;height:44px;width:44px;border-radius:22px;background-color:#979797;color:#494949;font-size:44px;line-height:44px;text-align:center;cursor:pointer}
+    .pop360 .x-closer:hover{color:#fff}</code></pre>
+    <p>&nbsp;</p>
+    <h3>The above code would produce</h3>
+    <a title="Launch EFLH1250 360 View" href="#pop360" data-canvasWidth="750" data-canvasHeight="501" data-framesPath="http://s7d5.scene7.com/is/image/horizonhobby/" data-framesFile="360_EFLH1250_{col}?wid=750"><img src="img/360_icon.jpg" alt="360 icon" /></a>
+    <a title="Launch BLH7400 360 View" href="#pop360" data-canvasWidth="750" data-canvasHeight="316" data-framesPath="http://s7d5.scene7.com/is/image/horizonhobby/" data-framesFile="360_BLH7400_{col}?wid=750" data-framesReverse="true"><img src="img/360_icon.jpg" alt="360 icon" /></a>
+    <a title="Launch BLH7600 360 View" href="#pop360" data-canvasWidth="750" data-canvasHeight="280" data-framesPath="http://s7d5.scene7.com/is/image/horizonhobby/" data-framesFile="360_BLH7600_{col}?wid=750"><img src="img/360_icon.jpg" alt="360 icon" /></a>
+    <a title="Launch BLH7800 360 View" href="#pop360" data-canvasWidth="750" data-canvasHeight="290" data-framesPath="http://s7d5.scene7.com/is/image/horizonhobby/" data-framesFile="360_BLH7800_{col}?wid=750" data-framesReverse="true"><img src="img/360_icon.jpg" alt="360 icon" /></a>
+    <a title="Launch EFL10550 360 View" href="#pop360" data-canvasWidth="750" data-canvasHeight="269" data-framesFile="EFL10550-{col}.jpg" data-framesReverse="true"><img src="img/360_icon.jpg" alt="360 icon" /></a>
+    <p>&nbsp;</p>
+    <a name="params"></a>
+    <h3>Full Source</h3>
+    <pre class="line-numbers" style="overflow-y:hidden;" data-src="js/canvas360.js"></pre>
+  </div>
+  
+  
+  </div></div>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script src="js/canvas360.min.js"></script>
+  <script src="js/prism.js"></script>
+  <script src="js/prism-line-numbers.min.js"></script>
+  <script src="js/prism-file-highlight.min.js"></script>
+  <script>
+    (function($) {
+      $('a[href="#pop360"]').on('click', function(e) {
+        e.preventDefault();
+        // Add our modal and target divs
+        $('body').append($('<div />').addClass('popbk')).append($('<div />').addClass('pop360'));
+        // Notice data attributes lose camelCase
+        canvas360({
+          canvasId : '.pop360',
+          canvasWidth : parseInt($(this).data('canvaswidth')),
+          canvasHeight: parseInt($(this).data('canvasheight')),
+          framesPath : $(this).data('framespath') || '',
+          framesFile : $(this).data('framesfile'),
+          framesReverse: !!$(this).data('framesreverse') || false
+        });
+        // add our closer
+        $('.pop360').append('<a class="x-closer">&#215;</a>');
+      });
+      $(document).on('click', '.x-closer, .popbk', function(e) {
+        $('.popbk, .pop360').fadeOut('fast', function() {
+          $('.popbk, .pop360').remove();
+        });
+      });
+    })(jQuery);
+    
+  </script>
+</body>
+</html>

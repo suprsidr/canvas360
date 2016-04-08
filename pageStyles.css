@@ -1,0 +1,16 @@
+html, body {margin:0;padding:0;font-family:Tahoma, Arial, Helvetica, sans-serif;font-size:14px;color:#333333;background:#888c95;height:100%;}
+body {padding:1px 0; box-shadow:0 0 51px 12px rgba(0, 0, 0, 0.25) inset;height:auto;min-height:100%;}
+h2 {color:#315095;}
+
+#header {margin:0;padding:1px 0 0;height:80px;background:#000000;color;#ffffff;}
+#header a {font-size:1.5em;color:#ffffff;text-decoration:none;}
+#header ul li {display:inline-block;list-style:none;padding:3px 20px;margin-top:10px;}
+div.mainContent {width:960px;margin:20px auto;background:#ffffff;border-radius:5px;border:1px solid #444444;}
+.inner {padding:20px;}
+.usage h3 {text-indent:15px;border-bottom:2px solid #888c95;}
+.code {background:#FBF9EA;border:1px solid #E2E1D5;max-height:200px;padding:3px 5px;white-space:pre;overflow:auto;font-family:Verdana, sans-serif;font-size:0.85em;margin:20px 0 30px;}
+table.options {border-left:1px solid #dddddd;}
+table.options td {border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;line-height: 1.6;padding: 7px 10px;}
+table.options th {line-height: 1.6;padding: 7px 10px;background:#363636;color:#ffffff;text-align:left;}
+table.options tr:nth-child(even) td {background:#fcfcfc;}
+table.options tr:nth-child(odd) td {background:#f3f3f3;}
